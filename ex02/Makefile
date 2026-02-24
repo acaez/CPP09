@@ -1,14 +1,11 @@
-NAME		= bureaucrat
+NAME		= identify
 
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 SRCS		= main.cpp \
-			  Bureaucrat.cpp \
-			  AForm.cpp \
-			  ShrubberyCreationForm.cpp \
-			  RobotomyRequestForm.cpp \
-			  PresidentialPardonForm.cpp
+			  Base.cpp \
+			  Functions.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
@@ -22,7 +19,6 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -f $(OBJS)
-	rm -f *_shrubbery
 
 fclean: clean
 	rm -f $(NAME)

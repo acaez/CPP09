@@ -1,10 +1,10 @@
-NAME		= bureaucrat
+NAME		= convert
 
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 SRCS		= main.cpp \
-			  Bureaucrat.cpp
+			  ScalarConverter.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
