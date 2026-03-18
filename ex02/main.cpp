@@ -1,70 +1,60 @@
 #include <iostream>
-#include <string>
-#include "Array.hpp"
+#include <list>
+#include "MutantStack.hpp"
 
-template <typename T>
-
-void	printArray(Array<T> const &arr)
+int main(void)
 {
-	for (unsigned int i = 0; i < arr.size(); i++)
-		std::cout << "[" << i << "] = " << arr[i] << std::endl;
-}
+    std::cout << "=== Subject test ===" << std::endl;
+    MutantStack<int> mstack;
+    mstack.push(5);
+    mstack.push(17);
+    std::cout << mstack.top() << std::endl;
+    mstack.pop();
+    std::cout << mstack.size() << std::endl;
+    mstack.push(3);
+    mstack.push(5);
+    mstack.push(737);
+    mstack.push(0);
 
-int	main(void)
-{
-	std::cout << "=== Empty array ===" << std::endl;
-	Array<int>	empty;
-	std::cout << "size = " << empty.size() << std::endl;
+    MutantStack<int>::iterator it = mstack.begin();
+    MutantStack<int>::iterator ite = mstack.end();
+    ++it;
+    --it;
+    while (it != ite)
+    {
+        std::cout << *it << std::endl;
+        ++it;
+    }
+    std::stack<int> s(mstack);
 
-	std::cout << "\n=== int array (n=5, default init) ===" << std::endl;
-	Array<int>	ints(5);
-	std::cout << "size = " << ints.size() << std::endl;
-	printArray(ints);
+    std::cout << "=== Same test with std::list ===" << std::endl;
+    std::list<int> lst;
+    lst.push_back(5);
+    lst.push_back(17);
+    std::cout << lst.back() << std::endl;
+    lst.pop_back();
+    std::cout << lst.size() << std::endl;
+    lst.push_back(3);
+    lst.push_back(5);
+    lst.push_back(737);
+    lst.push_back(0);
 
-	std::cout << "\n=== Fill and access ===" << std::endl;
-	for (unsigned int i = 0; i < ints.size(); i++)
-		ints[i] = (int)(i * 10);
-	printArray(ints);
+    std::list<int>::iterator it2 = lst.begin();
+    std::list<int>::iterator ite2 = lst.end();
+    ++it2;
+    --it2;
+    while (it2 != ite2)
+    {
+        std::cout << *it2 << std::endl;
+        ++it2;
+    }
 
-	std::cout << "\n=== Deep copy (copy constructor) ===" << std::endl;
-	Array<int>	copy(ints);
-	copy[0] = 999;
-	std::cout << "original[0] = " << ints[0] << " (must be 0, not 999)" << std::endl;
-	std::cout << "copy[0]     = " << copy[0] << std::endl;
+    std::cout << "=== Extra: empty/size ===" << std::endl;
+    MutantStack<int> ms2;
+    std::cout << "empty: " << ms2.empty() << std::endl;
+    ms2.push(42);
+    ms2.push(84);
+    std::cout << "size: " << ms2.size() << std::endl;
 
-	std::cout << "\n=== Deep copy (operator=) ===" << std::endl;
-	Array<int>	assigned;
-	assigned = ints;
-	assigned[1] = 777;
-	std::cout << "original[1] = " << ints[1] << " (must be 10, not 777)" << std::endl;
-	std::cout << "assigned[1] = " << assigned[1] << std::endl;
-
-	std::cout << "\n=== Out of bounds exception ===" << std::endl;
-	try
-	{
-		std::cout << ints[42] << std::endl;
-	}
-	catch (std::exception const &e)
-	{
-		std::cout << "Exception caught: " << e.what() << std::endl;
-	}
-
-	std::cout << "\n=== Empty array access ===" << std::endl;
-	try
-	{
-		std::cout << empty[0] << std::endl;
-	}
-	catch (std::exception const &e)
-	{
-		std::cout << "Exception caught: " << e.what() << std::endl;
-	}
-
-	std::cout << "\n=== string array ===" << std::endl;
-	Array<std::string>	strs(3);
-	strs[0] = "hello";
-	strs[1] = "world";
-	strs[2] = "42";
-	printArray(strs);
-
-	return 0;
+    return 0;
 }

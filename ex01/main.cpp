@@ -1,66 +1,33 @@
 #include <iostream>
-#include <string>
-#include "Iter.hpp"
+#include <vector>
+#include <cstdlib>
+#include "Span.hpp"
 
-template <typename T>
-void	print(T const &x)
+int main(void)
 {
-	std::cout << x << " ";
-}
+    std::cout << "=== Subject test ===" << std::endl;
+    Span sp = Span(5);
+    sp.addNumber(6);
+    sp.addNumber(3);
+    sp.addNumber(17);
+    sp.addNumber(9);
+    sp.addNumber(11);
+    std::cout << sp.shortestSpan() << std::endl;
+    std::cout << sp.longestSpan() << std::endl;
 
-void	increment(int &x)
-{
-	x++;
-}
+    std::cout << "=== Full span ===" << std::endl;
+    try { sp.addNumber(42); }
+    catch (const std::exception &e) { std::cout << "Exception: " << e.what() << std::endl; }
 
-class Awesome
-{
-public:
-	Awesome(int n) : _n(n) {}
-	int	getN() const { return _n; }
-	void	increment()   { _n++; }
+    std::cout << "=== Range fill (10000 numbers) ===" << std::endl;
+    std::vector<int> big;
+    for (int i = 0; i < 10000; i++)
+        big.push_back(i);
 
-private:
-	int _n;
-};
+    Span sp3(10000);
+    sp3.addNumbers(big.begin(), big.end());
+    std::cout << "Shortest: " << sp3.shortestSpan() << std::endl;
+    std::cout << "Longest:  " << sp3.longestSpan() << std::endl;
 
-std::ostream &operator<<(std::ostream &o, Awesome const &a)
-{
-	return o << "Awesome(" << a.getN() << ")";
-}
-
-void	incrementAwesome(Awesome &a)
-{
-	a.increment();
-}
-
-int	main(void)
-{
-	std::cout << "=== int array (print) ===" << std::endl;
-	int	ints[] = {1, 2, 3, 4, 5};
-	::iter(ints, 5, print<int>);
-	std::cout << std::endl;
-
-	std::cout << "=== int array (increment then print) ===" << std::endl;
-	::iter(ints, 5, increment);
-	::iter(ints, 5, print<int>);
-	std::cout << std::endl;
-
-	std::cout << "=== const int array (print) ===" << std::endl;
-	int const	cints[] = {10, 20, 30};
-	::iter(cints, 3, print<int>);
-	std::cout << std::endl;
-
-	std::cout << "=== string array (print) ===" << std::endl;
-	std::string	strs[] = {"hello", "world", "42"};
-	::iter(strs, 3, print<std::string>);
-	std::cout << std::endl;
-
-	std::cout << "=== Awesome array (increment then print) ===" << std::endl;
-	Awesome	awesomes[] = {Awesome(1), Awesome(2), Awesome(3)};
-	::iter(awesomes, 3, incrementAwesome);
-	::iter(awesomes, 3, print<Awesome>);
-	std::cout << std::endl;
-
-	return 0;
+    return 0;
 }
